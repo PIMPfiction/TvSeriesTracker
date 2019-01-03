@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset = "UTF-8">
+      <title>Menus</title>
+   </head>
+   <body>
+      <script type = "text/javascript">
+         const {remote, ipcMain} = require('electron')
+         const ipc = require('electron').ipcRenderer
+         const {Tray, Menu} = remote
+         const path = require('path')
+         let trayIcon = new Tray(path.join('/Users/sanchezpessa/Desktop/serieTracker/logo/logo.jpg'))
+
+         const trayMenuTemplate = [
+            {
+               label: 'Empty Application',
+               enabled: false
+            },
+
+            {
+               label: 'Settings',
+               click: function () {
+                  console.log("Clicked on settings")
+               }
+            },
+
+            {
+               label: 'Quit',
+               click: function () {
+                 ipc.send('tray-quit','');
+               }
+            }
+         ]
+
+         let trayMenu = Menu.buildFromTemplate(trayMenuTemplate)
+         trayIcon.setContextMenu(trayMenu)
+      </script>
+   </body>
+</html>
