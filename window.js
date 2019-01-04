@@ -2,12 +2,13 @@ const axios = require('axios');
 require('easy-autocomplete');
 
 
-function card_object(name, date, image){
+function card_object(name, date, image, counter){
+  const pure_date = date.slice(0, -3) // cardta bunu bir attribute'a koy, alarmlar bu tarihi kullanacaklar
   var split = date.split(".");
   split[1] = month[parseInt(split[1])];
   var date = split.join(".").slice(0, -3);
   name = name.replace("+", " ");
-  return "<div class='col-sm-4 col-xs-4 col-lg-4'><div class='card mt-3'><div class='col-auto'><img src='"+image+"' class='card-img-top' alt='Card Image cap'></div><div class='col'><div class='card-block px-2 '><h5 class='card-title'>"+name+"</h5><p class='card-text'>"+date+"</p></div></div></div></div>"
+  return "<div class='col-sm-4 col-xs-4 col-lg-4'><div class='card mt-3' id='card_"+counter+"'draggable='true' ondragstart='drag(event)'><div class='col-auto'><img src='"+image+"' class='card-img-top' alt='Card Image cap'></div><div class='col'><div class='card-block px-2 '><h5 class='card-title' date='"+pure_date+"'>"+name+"</h5><p class='card-text'>"+date+"</p></div></div></div></div>"
 };
 
 const config = { //axios configuration
@@ -22,13 +23,14 @@ function doNotify() {
     $(".progress").removeClass("invisible");
     $(".progress-bar").css('width', '50%');
     var tv_series = $("#text").val().toLocaleUpperCase('tr-TR').replace(" ", "+");
-
+    var counter = 0;
     var request = axios.get("https://www.digiturk.com.tr/yayin-akisi/api/program/ara/?value="+encodeURI(tv_series), config)
     .then(function (response, array)
     {
       var image = $(response.data).find(".channel-image").attr("src");
       $(response.data).find(".time").each(function(index){
-        $("#card-container").append(card_object(tv_series, $(this).attr("datetime"), image));
+        $("#card-container").append(card_object(tv_series, $(this).attr("datetime"), image, counter));
+        counter += 1;
       });
       $(".progress-bar").css('width', '100%');
 

@@ -53,6 +53,6 @@ app.on('ready', function() {
    let trayMenu = Menu.buildFromTemplate(trayMenuTemplate)
    trayIcon.setContextMenu(trayMenu)
 
-    //mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
 
 });

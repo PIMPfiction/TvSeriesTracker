@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html>
-
-<head>
+<html><head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,7 +8,7 @@
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="../statics/bootstrap.css">
     <!-- easyAutocomplete css-->
-    <link  rel="stylesheet" type="text/css" href="../statics/easy-autocomplete.themes.css">
+    <link rel="stylesheet" type="text/css" href="../statics/easy-autocomplete.themes.css">
     <!-- Our Custom CSS -->
     <link rel="stylesheet" href="style5.css">
 
@@ -29,10 +26,9 @@
 
   function drop(ev) {
     ev.preventDefault();
-    var id = ev.dataTransfer.getData("text");
-    name = $('#'+id).find(".card-title").text();
-    date = $("#card").find(".card-title").attr("date");
-    add_alarm(date, name);
+     alert(ev.dataTransfer.getData("text"));
+     alert($(ev.target).find(".card-title").text());
+     //$("#card").find(".card-title").attr("date")
 
   }
 
@@ -127,10 +123,10 @@
             <!-- HACK: BODY  -->
             <div class="container-fluid">
         			<div class="row-fluid col-md-12 col-xs-12 col-sm-12">
-        				    <input id="text" type="text" class="form-control" placeholder="Enter Tv Series" aria-label="tv-series-input">
+        				    <div class="easy-autocomplete eac-plate" style="width: 840px;"><input id="text" type="text" class="form-control" placeholder="Enter Tv Series" aria-label="tv-series-input" autocomplete="off"><div class="easy-autocomplete-container" id="eac-container-text"><ul style="display: none;"><li class="selected"><div class="eac-item">ANTİK UZAYLILAR</div></li></ul></div></div>
         			</div>
               <div class="row-fluid col-sm-10 col-xs-10 col-md-10 col-lg-10">
-            			<div class="progress invisible" style="width: 620px;">
+            			<div class="progress" style="width: 620px;">
             				<div class="progress-bar d-flex bg-success" role="progressbar" style="width: 100%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
             			</div>
               </div>
@@ -140,10 +136,23 @@
         		<div class="container" style="margin-left: 5px;margin-right: 10px;">
 
         			<div class="col-md-12 col-xs-12 col-sm-12">
+
         				<div id="card-container" class="row">
 
+                  <div class="col-sm-4 col-xs-4 col-lg-4">
+                    <div class="card mt-3" draggable="true" ondragstart="drag(event)">
+                      <div class="col-auto">
+                      <img src="http://contentlibrary.digiturk.com.tr/Channel/57/Image/history.png" class="card-img-top" alt="Card Image cap"></div>
+                      <div class="col">
+                        <div class="card-block px-2 ">
+                          <h5 class="card-title">ANTİK UZAYLILAR</h5>
+                          <p class="card-text">13.January.2019 16:40</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
-                </div>
+                  <div class="col-sm-4 col-xs-4 col-lg-4"><div class="card mt-3"><div class="col-auto"><img src="http://contentlibrary.digiturk.com.tr/Channel/57/Image/history.png" class="card-img-top" alt="Card Image cap"></div><div class="col"><div class="card-block px-2 "><h5 class="card-title">ANTİK UZAYLILAR</h5><p class="card-text">14.January.2019 03:45</p></div></div></div></div></div>
 
         			</div>
         		</div>
@@ -170,6 +179,7 @@
     <script src="./notification.js"></script>
     <script>if (window.module) module = window.module;</script>
 
-</body>
 
-</html>
+
+
+</body></html>
