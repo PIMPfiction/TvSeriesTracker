@@ -12,16 +12,16 @@ app.on('ready', function() {
       nodeIntegration: true,
       darkTheme: false,
       maximizable: false,
-      show: true
-      //resizable: true
+      show: true,
+      resizable: false
     }
   );
-  mainWindow.loadURL('file://' + __dirname + '/html/sidebar.html');
+  mainWindow.loadURL('file://' + __dirname + '/html/main.html');
   mainWindow.on('close', (event) => {
     event.preventDefault();
     mainWindow.hide();
   })
-
+  console.log(app.getPath('userData'))
   ///trayIcon
 
   let trayIcon = new Tray(path.join('/Users/sanchezpessa/Desktop/serieTracker/logo/logo.jpg'))
@@ -53,6 +53,6 @@ app.on('ready', function() {
    let trayMenu = Menu.buildFromTemplate(trayMenuTemplate)
    trayIcon.setContextMenu(trayMenu)
 
-    mainWindow.webContents.openDevTools();
+    //mainWindow.webContents.openDevTools();
 
 });

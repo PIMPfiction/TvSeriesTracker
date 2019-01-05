@@ -31,7 +31,7 @@
     ev.preventDefault();
     var id = ev.dataTransfer.getData("text");
     name = $('#'+id).find(".card-title").text();
-    date = $("#card").find(".card-title").attr("date");
+    date = $("#"+id).find(".card-title").attr("date");
     add_alarm(date, name);
 
   }
@@ -49,13 +49,16 @@
             <ul class="list-unstyled components">
                 <p>Menu</p>
                 <li ondrop="drop(event)" ondragover="allowDrop(event)">
-                    <a href="#">Search</a>
+                    <a href="#">Add Reminder</a>
+                </li>
+                <li id="reminders">
+                  <a href="">Reminders</a>
                 </li>
                 <li>
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Favorite Series</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li>
-                            <a href="#">Ancient Aliens</a>
+                            <a onlick="javascript:$('#main-content').load('./test.html');">Ancient Aliens</a>
                         </li>
                         <li>
                             <a href="#">Arka Sokaklar</a>
@@ -83,10 +86,10 @@
 
             <ul class="list-unstyled CTAs">
                 <li>
-                    <a href="https://goktug-cetin.eu-west-3.com" class="download">Developer</a>
+                    <a href="http://goktug-cetin.s3-website.eu-central-1.amazonaws.com/" class="download">Developer</a>
                 </li>
                 <li>
-                    <a href="#logout" class="article">Exit from Program</a>
+                    <a href="#logout" id="search-page" class="article">Back to Search Page</a>
                 </li>
             </ul>
         </nav>
@@ -102,6 +105,8 @@
                         <span></span>
                         <span></span>
                     </button>
+
+
                     <!-- <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fas fa-align-justify"></i>
                     </button>
@@ -124,6 +129,7 @@
                     </div> -->
                 </div>
             </nav>
+            <div id="main-content">
             <!-- HACK: BODY  -->
             <div class="container-fluid">
         			<div class="row-fluid col-md-12 col-xs-12 col-sm-12">
@@ -147,6 +153,7 @@
 
         			</div>
         		</div>
+          </div>
         </div>
     </div>
 
@@ -164,6 +171,12 @@
                 $('#sidebar').toggleClass('active');
                 $(this).toggleClass('active');
             });
+            $("#reminders").on('click',function (){
+              $('#main-content').load('./reminders.html');
+            });
+            $("#search-page").on('click', function() {
+              window.location = './main.html';
+            })
         });
     </script>
     <script src="../window.js"></script>
