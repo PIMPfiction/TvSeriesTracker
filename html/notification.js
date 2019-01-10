@@ -1,4 +1,3 @@
-var async = require('async')
 const {Notification} = require('electron')
 const Store = require('electron-store')
 const store = new Store();
@@ -7,7 +6,6 @@ const store = new Store();
 //const notificationx = new window.Notification('Reminder',{
 //  body:"time is up"
 //  })
-const notifier = require('node-notifier')
 
 
 window.setInterval(function(){
@@ -17,16 +15,27 @@ window.setInterval(function(){
 
 function add_alarm(date, name){
   // HACK: add notification to series
-  console.log(date, name);
   date = date.replace(' ', '.').replace(':', '.').split('.');
-  date = new Date(date[2], date[1], date[0], date[3], date[4])
+  date = new Date(date[2], parseInt(date[1])-1, date[0], date[3], date[4])
   //date = null   // HACK: delete this
   //date = new Date() // HACK: delete this
   if (store.get('reminders.'+name)){ //diziye bir hatirlatici daha ekle
-    var alarms = store.get('reminders.'+name)
-    alarms.push(date)
+    var alarms = store.get('reminders.'+name);
+    if (alarms){
+      if (alarms.length >= 1){
+        for ( let alarm in alarms){
+          var alarm_date = new Date(alarms[alarm]);
+          if (alarm_date.getTime() == date.getTime()){
+            return;
+          }
+        };
+      };
+    }
+    alarms.push(date);
+    date.setMinutes(date.getMinutes() - 5) // 5 dakika onceye alarm koy
     store.set('reminders.'+name, alarms)
   } else {
+    date.setMinutes(date.getMinutes() - 5) // 5 dakika onceye alarm koy
     store.set('reminders.'+name, [date])
   }
 }
@@ -35,11 +44,11 @@ function alarm_sender(){ //compare dates of alarms in loop then sends notificati
   // HACK: check alarms
   var database = store.get('reminders');
   if (database){
-    const now = new Date();
+    var now = new Date();
     for ( series in store.get('reminders')){
       var alarms = store.get('reminders.'+series)
       for (let alarm of alarms){
-        const alarm_date = new Date(alarm)
+        var alarm_date = new Date(alarm)
         if(alarm_date.getHours() == now.getHours() && alarm_date.getMonth() == now.getMonth() && alarm_date.getDate() == now.getDate()){
           if(alarm_date.getMinutes() == now.getMinutes()){
             //delete alarm
@@ -53,6 +62,12 @@ function alarm_sender(){ //compare dates of alarms in loop then sends notificati
 
           }
         }
+        else if(alarm_date.getTime() < now.getTime()){
+          var index = alarms.indexOf(alarm)
+          delete alarms[index]
+          alarms = alarms.filter(String)
+          store.set('reminders.'+series, alarms)
+        }
       }
     }
   }
@@ -61,6 +76,6 @@ function alarm_sender(){ //compare dates of alarms in loop then sends notificati
 
 
 function notification_func(alarm_date, series){
-  const notification = new window.Notification(series, {body:'Will be aired '+alarm_date})
+  let notification = new window.Notification(series, {body:'Will be aired '+alarm_date})
   //notification.show()
 }

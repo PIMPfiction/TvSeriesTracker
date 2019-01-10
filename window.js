@@ -3,7 +3,7 @@ require('easy-autocomplete');
 
 
 function card_object(name, date, image, counter){
-  const pure_date = date.slice(0, -3) // cardta bunu bir attribute'a koy, alarmlar bu tarihi kullanacaklar
+  var pure_date = date.slice(0, -3) // cardta bunu bir attribute'a koy, alarmlar bu tarihi kullanacaklar
   var split = date.split(".");
   split[1] = month[parseInt(split[1])];
   var date = split.join(".").slice(0, -3);

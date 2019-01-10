@@ -1,14 +1,15 @@
 const {app, BrowserWindow, ipcMain, Tray, Menu, Notification} = require('electron');
 const path = require('path')
-var async = require('async')
 let mainWindow
 let win
 
+const path_logo = path.join(__dirname, 'logo')
+let tray = null
 app.on('ready', function() {
   mainWindow = new BrowserWindow(
     {
       backgroundColor: '#2e2c29',
-      width: 1150, height: 800,
+      width: 1190, height: 820,
       nodeIntegration: true,
       darkTheme: false,
       maximizable: false,
@@ -24,7 +25,7 @@ app.on('ready', function() {
   console.log(app.getPath('userData'))
   ///trayIcon
 
-  let trayIcon = new Tray(path.join('/Users/sanchezpessa/Desktop/serieTracker/logo/logo.jpg'))
+  trayIcon = new Tray(path.join(path_logo, 'logo.jpg'))
 
    const trayMenuTemplate = [
       {
@@ -33,9 +34,9 @@ app.on('ready', function() {
       },
 
       {
-         label: 'Settings',
+         label: 'Open App',
          click: function () {
-            console.log("Clicked on settings")
+            mainWindow.show();
          }
       },
 
