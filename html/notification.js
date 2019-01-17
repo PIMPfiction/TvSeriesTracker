@@ -1,6 +1,7 @@
 const {Notification} = require('electron')
 const Store = require('electron-store')
 const store = new Store();
+const path = require('path')
 
 
 //const notificationx = new window.Notification('Reminder',{
@@ -73,9 +74,25 @@ function alarm_sender(){ //compare dates of alarms in loop then sends notificati
   }
 
 }
+var notify_logo = path.join(__dirname, '../logo')
 
+if (process.platform == 'darwin'){
+    function notification_func(alarm_date, series){
+      let notification = new window.Notification(series, {
+        body:'Will be aired '+alarm_date,
+        icon: path.join(notify_logo, 'image.png')
+      })
+    //notification.show()
+    }
+}
+else if (process.platform == 'win32'){
+  const notifier = require('node-notifier')
+  function notification_func(alarm_date,series){
+    notifier.notify({
+      title: series,
+      message: "Will be aired in 5 minutes.",
+      icon: path.join(notify_logo, 'image.png'),
+    })
 
-function notification_func(alarm_date, series){
-  let notification = new window.Notification(series, {body:'Will be aired '+alarm_date})
-  //notification.show()
+  }
 }
