@@ -8,7 +8,7 @@ function card_object(name, date, image, counter){
   split[1] = month[parseInt(split[1])];
   var date = split.join(".").slice(0, -3);
   name = name.replace("+", " ");
-  return "<div class='col-sm-4 col-xs-4 col-lg-4'><div class='card mt-3' id='card_"+counter+"'draggable='true' ondragstart='drag(event)'><div class='col-auto'><img src='"+image+"' class='card-img-top' alt='Card Image cap'></div><div class='col'><div class='card-block px-2 '><h5 class='card-title' date='"+pure_date+"'>"+name+"</h5><p class='card-text'>"+date+"</p></div></div></div></div>"
+  return "<div class='col-sm-12 col-xs-12 col-lg-4'><div class='card mt-3' id='card_"+counter+"'draggable='true' ondragstart='drag(event)'><div class='col-auto'><img src='"+image+"' class='card-img-top' alt='Card Image cap'></div><div class='col'><div class='card-block px-2 '><h5 class='card-title' date='"+pure_date+"'>"+name+"</h5><p class='card-text'>"+date+"</p></div></div></div></div>"
 };
 
 const config = { //axios configuration

@@ -27,30 +27,14 @@
     ev.dataTransfer.setData("text", ev.target.id);
   }
 
-  function drop(ev) { // add tvserie to reminders
+  function drop(ev) {
     ev.preventDefault();
     var id = ev.dataTransfer.getData("text");
     name = $('#'+id).find(".card-title").text();
     date = $("#"+id).find(".card-title").attr("date");
-    image = $('#'+id).find(".card-img-top").attr("src");
-    store.set('images.'+name, image);
     add_alarm(date, name);
 
   }
-
-  function allowDrop_fav(ev){
-    ev.preventDefault();
-  }
-
-  function drop_fav(ev){ //add tvserie name to favorites
-    ev.preventDefault();
-    var id = ev.dataTransfer.getData("text");
-    name = $('#'+id).find(".card-title").text();
-    image = $('#'+id).find(".card-img-top").attr("src");
-    store.set('images.'+name, image);
-    store.set('favorites.'+name, image);
-  }
-
 
 </script>
 <body>
@@ -67,22 +51,35 @@
                 <li ondrop="drop(event)" ondragover="allowDrop(event)">
                     <a href="#">Add Reminder</a>
                 </li>
-                <li ondrop="drop_fav(event)" ondragover="allowDrop_fav(event)">
-                    <a href="#">Add to Favorites</a>
-                </li>
                 <li id="reminders">
                   <a href="#">Reminders</a>
                 </li>
                 <li>
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Favorite Series</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
-                      <!--jquery will update here -->
+                        <li>
+                            <a onlick="javascript:$('#main-content').load('./test.html');">Ancient Aliens</a>
+                        </li>
+                        <li>
+                            <a href="#">Arka Sokaklar</a>
+                        </li>
+                        <li>
+                            <a href="#">MythBusters</a>
+                        </li>
                     </ul>
                 </li>
                 <li class="active">
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Reminders</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
-                      <!--jquery will update here -->
+                        <li>
+                            <a href="#">Home 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Home 2</a>
+                        </li>
+                        <li>
+                            <a href="#">Home 3</a>
+                        </li>
                     </ul>
                 </li>
             </ul>
@@ -162,7 +159,8 @@
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
     <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
-    <script>window.$ = window.jQuery = require('../statics/jquery-3.0.0.min.js');</script>
+    <script src="../statics/jquery-3.0.0.min.js"></script>
+
     <!-- Popper.JS -->
     <script src="../statics/popper.min.js"></script>
     <!-- Bootstrap JS -->
@@ -180,12 +178,6 @@
             $("#search-page").on('click', function() {
               window.location = "./main.html";
             });
-            for (let serie in store.get('favorites')){ //Favorite series sidebar
-              $("#pageSubmenu").append("<li><a href='#'>"+serie+"</a></li>");
-            }
-            for (let serie in store.get('reminders')){ //Favorite series sidebar
-              $("#homeSubmenu").append("<li><a href='#'>"+serie+"</a></li>");
-            }
         });
     </script>
     <script src="../window.js"></script>

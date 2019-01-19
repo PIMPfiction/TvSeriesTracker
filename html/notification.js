@@ -10,9 +10,29 @@ const path = require('path')
 
 
 window.setInterval(function(){
-  console.log("alarm_sender() calistirildi")
   alarm_sender()
-}, 15000);
+}, 15*000);
+
+window.setInterval(function(){
+  for (let serie in store.get('favorites')){
+    favorite_loop(serie)
+  }
+}, 3600*1000);
+
+
+function favorite_loop(serie){
+  var request = axios.get("https://www.digiturk.com.tr/yayin-akisi/api/program/ara/?value="+encodeURI(serie), config)
+  .then(function (response, array)
+  {
+    var image = $(response.data).find(".channel-image").attr("src");
+    $(response.data).find(".time").each(function(index){
+      var date = $(this).attr("datetime");
+      date = date.slice(0, -3);
+      add_alarm(date, serie);
+    });
+
+  });
+}
 
 function add_alarm(date, name){
   // HACK: add notification to series
@@ -26,7 +46,9 @@ function add_alarm(date, name){
       if (alarms.length >= 1){
         for ( let alarm in alarms){
           var alarm_date = new Date(alarms[alarm]);
+          alarm_date.setMinutes(alarm_date.getMinutes() +5);
           if (alarm_date.getTime() == date.getTime()){
+            console.log("aynisi var zaten")
             return;
           }
         };
